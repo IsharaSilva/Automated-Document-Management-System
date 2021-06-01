@@ -1,0 +1,13 @@
+<br>
+<div class="btn-group">
+    <button type="button" class="btn btn-primary btn-sm" routerLink="/home/managedocs/workflowdata/new"  routerLinkActive="active" (click)="toOpenNew()" >NEW</button>
+    <button type="button" class="btn btn-primary btn-sm" routerLink="/home/managedocs/workflowdata/old"  routerLinkActive="false" (click)="toOpenOld()">OLD</button>
+    <button type="button" class="btn btn-primary btn-sm"  routerLink="/home/managedocs/workflowdata/processing"  routerLinkActive="false" (click)="toOpenProcessing()">ONGOING</button>
+</div>
+<br>
+<div>
+   <!-- <app-new-workflow *ngIf="this.tOfviewNewWorkflow==true"></app-new-workflow>
+    <app-old-workflow *ngIf="this.tOfviewOldWorkflow==true"></app-old-workflow>
+    <app-processing-now *ngIf="this.tOfviewProcessingNow==true"></app-processing-now>-->
+    <router-outlet></router-outlet>
+</div>

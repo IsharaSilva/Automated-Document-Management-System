@@ -1,0 +1,64 @@
+<br>
+<div class="container-fluid border">
+<br>
+<div *ngIf="this.userService.otherUserCount == 0">
+  <h5 style="text-align: center;">Empty List!</h5>
+</div>
+<div *ngIf="this.userService.otherUserCount != 0">
+<div style="text-align: center" class="centertb">
+<input type="text" [(ngModel)]="sName" (input)="search()" placeholder="Search here" />
+</div>
+<br>
+<div class="table-responsive" *ngIf="userService.allUsers" >
+  <div style="text-align: right;">
+    <button type="button" class="btn btn-outline-primary"  (click)="printReady()" data-toggle="tooltip" data-placement="top" title="Ready For Print"><i class="fa fa-list" aria-hidden="true"></i></button>&nbsp;
+    <button type="button" *ngIf="this.printReadyOk==true;" class="btn btn-outline-primary"  printSectionId="listId" printTitle="ARCHIVED USER LIST" styleSheetFile="assets/tablePrint.css" ngxPrint data-toggle="tooltip" data-placement="top" title="Print"><i class="fa fa-print" aria-hidden="true"></i></button>&nbsp;
+    <button type="button" *ngIf="this.resetBackVici==true;" class="btn btn-outline-primary"  (click)="resetBack()"><i class="fa fa-repeat" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Reset"></i></button>&nbsp;
+  </div>
+  <br>
+  <div id="listId">
+    <table class="responsive-table highlight">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Department</th>
+            <th>Designation</th>
+            <th>Created Date</th>
+            <th>Last Active</th>
+            <th>Status</th>
+            <th *ngIf="notPrint == true" >Options</th>
+          </tr>
+        </thead>
+        <tr *ngFor="let user of userService.allUsers | slice: (page-1) * pageSize : page * pageSize;index as i">
+          <td>{{user.fullName}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.role}}</td>
+          <td>{{user.department}}</td>
+          <td>{{user.position}}</td>
+          <td>{{getDate(user.createdAt)}}</td>
+          <td>{{getDate(user.lastActive)}}</td>
+          <td>{{user.status}}</td>
+          <td *ngIf="notPrint == true">
+              <!--*ngIf="user.role=='admin'"-->
+              <a (click)="getUserId(user._id)" (click)="getOtherUserRole(user.role)" (click)="departmentService.refreshDepsList(user._id)" (click)="positionService.refreshPostList(user._id)">
+                <app-model-for-other-user-role></app-model-for-other-user-role>
+              </a>
+              
+              <button type="button" class="btn btn-outline-danger" (click)="onDelete(user._id)" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></button>&nbsp;
+              <button type="button" class="btn btn-outline-info" (click)="toArchive(user.email)"  data-toggle="tooltip" data-placement="top" title="Archive"><i class="fa fa-archive" aria-hidden="true"></i></button>
+         </td>
+        </tr>
+      </table>
+    </div>
+      <br>
+      <div class="center">
+        <ngb-pagination [(page)]="page"  [collectionSize]="userService.allUsers.length" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+    </div>
+</div>
+</div>
+
+<br>
+</div>
+<br>

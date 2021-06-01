@@ -1,0 +1,9 @@
+/*text align inside class*/
+div.a {
+    text-align: center;
+  }
+
+.center {
+    display: flex;
+    justify-content: center;
+    }

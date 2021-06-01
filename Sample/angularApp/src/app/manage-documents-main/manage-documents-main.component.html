@@ -1,0 +1,22 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<br>
+<div class="container-fluid ">
+<div ngbDropdown class="d-inline-block" >
+    <button class="btn btn-outline-primary" id="dropdownBasic" ngbDropdownToggle >SELECT</button>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic" style="max-height:150px;overflow-y: auto;" >
+      <button ngbDropdownItem routerLink="/home/managedocs/viewdocs"  routerLinkActive="active"  (click)="passNameDir('View Documents')" >View Documents</button>
+      <button ngbDropdownItem routerLink="/home/managedocs/upload"  routerLinkActive="false" (click)="passNameDir('Upload')" *ngIf="this.role=='admin' || this.role=='author' " >Upload</button>
+      <button ngbDropdownItem routerLink="/home/managedocs/viewAarcDocs"  routerLinkActive="false" (click)="passNameDir('View Archived')"  *ngIf="this.role=='admin' " >View Archived</button>
+      <button ngbDropdownItem routerLink="/home/managedocs/viewCategory"  routerLinkActive="false" (click)="passNameDir('Manage Category')" *ngIf="this.role=='admin' || this.role=='author' ">Manage Category</button>
+      <button ngbDropdownItem routerLink="/home/managedocs/subcategory"  routerLinkActive="false" (click)="passNameDir('Manage Sub Category')" *ngIf="this.role=='admin' || this.role=='author' ">Manage Sub Category</button>
+      <button ngbDropdownItem routerLink="/home/managedocs/manageApprove"  routerLinkActive="false" (click)="passNameDir('Manage File Approve')"  *ngIf="this.role=='admin' " >Manage File Approve</button>
+      <button ngbDropdownItem routerLink="/home/managedocs/workflowdata/new"  routerLinkActive="false" (click)="passNameDir('Manage Workflow Data')"  *ngIf="this.role=='admin' " >Manage Workflow Data</button>
+    </div>
+  </div>
+  <br>
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<br>
+<div class="container-fluid border">
+<br>
+<div *ngIf="cTodayEndWorkflowDocs== 0">
+    <h5 style="text-align: center;">Empty List!</h5>
+</div>
+<div class="centertb">
+<div style="text-align: center" *ngIf="cTodayEndWorkflowDocs != 0">
+  <input type="text" [(ngModel)]="sNameM" (input)="search()" (keydown)="onKeydown($event)" placeholder="Search here"  /><!--(keydown)="onKeydown($event)"-->
+</div>
+</div>
+<br>
+<div class="table-responsive " *ngIf="cTodayEndWorkflowDocs != 0 && audit.allTodayEndWorkflow">
+  <div style="text-align: right;">
+    <button type="button" class="btn btn-outline-primary"  (click)="printReady()" data-toggle="tooltip" data-placement="top" title="Ready For Print"><i class="fa fa-list" aria-hidden="true"></i></button>&nbsp;
+    <button type="button" *ngIf="this.printReadyOk==true;" class="btn btn-outline-primary"  printSectionId="listId" printTitle="TODAY END WORKFLOW DATA" styleSheetFile="assets/tablePrint.css" ngxPrint data-toggle="tooltip" data-placement="top" title="Print"><i class="fa fa-print" aria-hidden="true"></i></button>&nbsp;
+    <button type="button" *ngIf="this.resetBackVici==true;" class="btn btn-outline-primary"  (click)="resetBack()"><i class="fa fa-repeat" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Reset"></i></button>&nbsp;
+  </div>
+  <br>
+  <div id="listId">
+    <table class="responsive-table highlight table-lg ">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Size(Mb)</th>
+            <th>Category</th>
+            <th>Department</th>
+            <th>CreatedBy</th>
+            <th>Workflow List</th>
+            <th *ngIf="notPrint == true">File</th>
+            <th>CreatedAt</th>
+            <th>EndAt</th>
+          </tr>
+        </thead>
+        <tr *ngFor="let doc of this.audit.allTodayEndWorkflow | slice: (page-1) * pageSize : page * pageSize;index as i">
+          <td>{{doc.name}}</td>
+          <td>{{doc.type}}</td>
+          <td>{{byteToMb(doc.size)}}</td>
+          <td>{{doc.category}}</td>
+          <td>{{doc.department}}</td>
+          <td *ngIf="this.printReadyOk==true">{{doc.createdBy}}</td>
+          <td *ngIf="notPrint == true"><app-popup-userprofile (click)="getOtherUserdetailesById(doc.createdBy)"></app-popup-userprofile></td>
+          <td *ngIf="this.printReadyOk==true">{{doc.workFlowList}}</td>
+          <td *ngIf="notPrint == true">
+           <app-model-view-old-list (click)="toPassListandNext(doc.workFlowList)"></app-model-view-old-list>
+          </td>
+          <td *ngIf="notPrint == true">
+            <button type="button" class="btn btn-outline-info"  *ngIf="doc.isLock===null"><a href="{{getLink(doc.file)}}"  target="_blank">View</a></button>
+          </td>
+          <td>{{this.workflow.getDate(doc.createdAt)}}</td>
+          <td>{{doc.workflowEndDate}}</td>
+        </tr>
+      </table>
+      </div>
+      <br>
+      <div class="center">
+        <ngb-pagination [(page)]="page"  [collectionSize]="audit.allTodayEndWorkflow.length" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+    </div>
+</div>
+
+<br>
+</div>
+<br>

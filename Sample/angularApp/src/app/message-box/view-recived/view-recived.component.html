@@ -1,0 +1,44 @@
+<br>
+<div class="container-fluid border">
+<br>
+<div class="centertb">
+  <div style="text-align: center">
+    <input type="text" [(ngModel)]="sName" (input)="search()" placeholder="Search here" (keydown)="onKeydown($event)" />&nbsp;
+  </div>
+  <br>
+  <div  class="a">
+    <button type="button" class="btn btn-outline-info"  (click)="refresh()"><i class="fa fa-refresh" aria-hidden="true"></i> Refresh</button>&nbsp;
+    <button type="button" class="btn btn-outline-danger" (click)="delAll()"><i class="fa fa-trash" aria-hidden="true"></i> Delete All</button>
+  </div>
+</div>
+<div class="table-responsive-sm" *ngIf="messageService.allRecived">
+  <table class="responsive-table highlight centertb">
+      <!--<thead>
+        <tr>
+          <th>Status</th>
+          <th>From</th>
+          <th>Date</th>
+          <th>Options</th>
+        </tr>
+      </thead>-->
+      <tr *ngFor="let msg of messageService.allRecived | slice: (page-1) * pageSize : page * pageSize;index as i">
+        <td *ngIf="msg.isRead=='READ'"><i class="fa fa-eye" aria-hidden="true"></i></td>
+        <td *ngIf="msg.isRead=='NEW'"><i class="fa fa-eye-slash" aria-hidden="true"></i></td>
+        <td>{{msg.from}}</td>
+        <td>{{messageService.getDate(msg.createdAt)}}</td>
+        <td>
+          <app-model-view (click)="passBody(msg.body)" (click)="passIsRead(msg._id)" (click)="replyModel(msg.from)" (click)="passAtach(msg.file)"></app-model-view>
+        </td>
+        <td>
+          <button type="button" class="btn btn-outline-danger" (click)="passDelete(msg._id)" ><i class="fa fa-trash" aria-hidden="true"> Delete </i></button>
+        </td>
+     </tr>
+    </table>
+    <br>
+      <div class="center">
+        <ngb-pagination [(page)]="page"  [collectionSize]="messageService.allRecived.length" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+    </div>
+</div>
+<br>
+</div>
+<br>

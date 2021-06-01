@@ -1,0 +1,42 @@
+<br>
+<div class="container-fluid border">
+<br>
+<div class="centertb" >
+  <div style="text-align: center" >
+    <input type="text" [(ngModel)]="sName" (input)="search()" placeholder="Search here"  (keydown)="onKeydown($event)" />&nbsp;
+  </div>
+  <br>
+  <div  class="a">
+    <button type="button" class="btn btn-outline-danger" (click)="delAll()"><i class="fa fa-trash" aria-hidden="true"></i> Delete All</button>
+  </div>
+</div>
+<div class="table-responsive-sm"  *ngIf="messageService.allSents">
+  <table class="responsive-table highlight centertb">
+      <!--<thead>
+        <tr>
+          <th>Status</th>
+          <th>From</th>
+          <th>Date</th>
+          <th>Options</th>
+        </tr>
+      </thead>-->
+      <tr *ngFor="let msg of messageService.allSents | slice: (page-1) * pageSize : page * pageSize;index as i">
+        <td>To:</td>
+        <td>{{msg.to}}</td>
+        <td>{{messageService.getDate(msg.createdAt)}}</td>
+        <td>
+          <app-model-view-sents (click)="passSentBdy(msg.body)" (click)="passAtach(msg.file)" ></app-model-view-sents>
+        </td>
+        <td>
+          <button type="button" class="btn btn-outline-danger" (click)="passDelete(msg._id)" ><i class="fa fa-trash" aria-hidden="true"> Delete </i></button>
+        </td>
+      </tr>
+    </table>
+    <br>
+    <div class="center">
+      <ngb-pagination [(page)]="page"  [collectionSize]="messageService.allSents.length" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+  </div>
+</div>
+<br>
+</div>
+<br>

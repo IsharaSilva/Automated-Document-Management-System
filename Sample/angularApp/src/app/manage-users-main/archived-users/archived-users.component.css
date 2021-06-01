@@ -1,0 +1,12 @@
+.center {
+  border: 5px solid transparent;
+  display: flex;
+  justify-content: center;
+  }
+th,td{
+  text-align: center;
+}
+.toright{
+  float: right;
+  padding: 5px;
+}
